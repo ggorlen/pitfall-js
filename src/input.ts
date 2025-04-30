@@ -339,30 +339,46 @@ function onClick(e: MouseEvent) {
     }
 }
 
+function specialKey(e: KeyboardEvent) {
+    return e.shiftKey || e.metaKey || e.ctrlKey || e.altKey;
+}
+
+function preventIfNotSpecial(e: KeyboardEvent) {
+    if (!specialKey(e)) {
+        e.preventDefault();
+    }
+}
+
 function onKeyDown(e: KeyboardEvent) {
     switch (e.code) {
-        case 'KeyA':
         case 'ArrowLeft':
+            preventIfNotSpecial(e);
+        case 'KeyA':
             leftKeyPressed = rightKeyPressed + 1;
             break;
-        case 'KeyD':
         case 'ArrowRight':
+            preventIfNotSpecial(e);
+        case 'KeyD':
             rightKeyPressed = leftKeyPressed + 1;
             break;
-        case 'KeyW':
         case 'ArrowUp':
+            preventIfNotSpecial(e);
+        case 'KeyW':
             upKeyPressed = downKeyPressed + 1;
             break;
-        case 'KeyS':
         case 'ArrowDown':
+            preventIfNotSpecial(e);
+        case 'KeyS':
             downKeyPressed = upKeyPressed + 1;
-            break;            
+            break;
         case 'Escape':
             exit();
-            break;    
+            break;
+        case 'Space':
+            preventIfNotSpecial(e);
         default:
             jumpKeyPressed = true;
-            break;            
+            break;
     }
 
     // touch testing
